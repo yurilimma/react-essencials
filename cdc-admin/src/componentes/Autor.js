@@ -18,6 +18,9 @@ export class FormularioAutor extends Component{
         this.setEmail =this.setEmail.bind(this);
         this.setSenha =this.setSenha.bind(this);
         this.enviaForm =this.enviaForm.bind(this);
+        //necessário fazer o bind de campo a campo
+        this.salvaAlteracao =this.salvaAlteracao.bind(this);
+
 
     }
     enviaForm(evento){
@@ -54,25 +57,22 @@ export class FormularioAutor extends Component{
               }   
         })
     }
-
-    setNome(nome){
+    
     //Alterar o valor nos objetos dentro do estado, apenas com o setState!!
-    this.setState({nome: nome.target.value});
-    }
-    setEmail(email){
-    this.setState({email: email.target.value});
-    }
-    setSenha(senha){
-    this.setState({senha: senha.target.value});
+    //parametrizando setada do valor nos campos do modelo
+    salvaAlteracao(nomeInput, evento){
+        var campo = {};
+        campo[nomeInput] = evento.value.target;
+        this.setState(campo);
     }
 
     render(){
         return(
             <div className="pure-form pure-form-aligned">
             <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm.bind()} method="post">
-              <InputCustomizado id="nome" type="text" name="nome" value={this.state.nome} onChange={this.setNome} />
-              <InputCustomizado id="email" type="email" name="email" value={this.state.email} onChange={this.setEmail} />
-              <InputCustomizado id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha} />
+              <InputCustomizado id="nome" type="text" name="nome" value={this.state.nome} onChange={this.salvaAlteracao.bind(this,'nome')} />
+              <InputCustomizado id="email" type="email" name="email" value={this.state.email} onChange={this.salvaAlteracao.bind(this,'email')} />
+              <InputCustomizado id="senha" type="password" name="senha" value={this.state.senha} onChange={this.salvaAlteracao.bind(this,'senha')} />
               
               <div className="pure-control-group">                                  
                 <label></label> 
